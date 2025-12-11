@@ -1,0 +1,322 @@
+<!DOCTYPE html>
+<html lang="th">
+
+<head>
+    <meta charset="UTF-8">
+    <title>แยก Angel / Demon | The Forge</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        forgeBg: '#020617',
+                        forgeCard: '#020817',
+                        forgeAccent: '#22c55e'
+                    }
+                }
+            }
+        }
+    </script>
+</head>
+
+<body
+    class="min-h-screen bg-gradient-to-br from-black via-slate-950 to-emerald-950 text-slate-100 flex justify-center px-3 py-6">
+
+    <!-- กรอบนอก -->
+    <div
+        class="w-full max-w-6xl bg-slate-950/80 border border-emerald-500/30 rounded-3xl shadow-2xl backdrop-blur-md px-4 py-5 md:px-7 md:py-6">
+
+        <!-- Top bar -->
+        <div class="flex flex-wrap items-center justify-between gap-3 mb-5">
+            <div
+                class="inline-flex items-center gap-2 px-3 py-1 rounded-full border border-emerald-400/70 bg-emerald-500/10 text-xs tracking-[0.18em] uppercase">
+                <span class="h-2.5 w-2.5 rounded-full bg-emerald-400 shadow-[0_0_12px_rgba(52,211,153,0.9)]"></span>
+                <span class="font-semibold text-emerald-100">Angel / Demon Classifier</span>
+            </div>
+
+            <div class="flex flex-wrap gap-2 text-xs">
+                <button
+                    class="inline-flex items-center gap-2 px-3 py-1.5 rounded-full border border-slate-500/60 bg-slate-900/70 hover:bg-slate-800/80 hover:border-emerald-400/80 hover:text-emerald-300 transition-all"
+                    onclick="goTo('index.html')">
+                    <span class="h-2 w-2 rounded-full bg-emerald-400"></span>
+                    <span></span>
+                </button>
+                <button
+                    class="inline-flex items-center gap-2 px-3 py-1.5 rounded-full border border-slate-500/60 bg-slate-900/70 hover:bg-slate-800/80 hover:border-emerald-400/80 hover:text-emerald-300 transition-all"
+                    onclick="goTo('index.html')">
+                    <span class="h-2 w-2 rounded-full bg-emerald-400"></span>
+                    <span></span>
+                </button>
+            </div>
+        </div>
+
+        <!-- Main card -->
+        <div class="bg-forgeCard/80 rounded-2xl border border-slate-600/70 shadow-lg overflow-hidden">
+            <div class="p-5 md:p-7">
+
+                <!-- Header -->
+                <div class="flex flex-wrap items-start justify-between gap-3 mb-4">
+                    <div class="space-y-1">
+                        <h1 class="text-lg md:text-xl font-semibold flex flex-wrap items-center gap-2">
+                            แยกเฉพาะ Angel / Demon / Not Found
+                            <span
+                                class="text-[10px] md:text-[11px] font-medium uppercase tracking-[0.22em] px-3 py-1 rounded-full border border-slate-500/70 bg-slate-900/80 text-slate-300">
+                                แบบง่าย ก๊อปแล้วแปะได้เลย
+                            </span>
+                        </h1>
+                        <p class="text-xs md:text-sm text-slate-300">
+                            <span class="font-semibold text-emerald-300">Input 1</span>: รายชื่อ + สถานะ เผ่า<br>
+                            <span class="font-semibold text-emerald-300">Input 2</span>: รายการ <span
+                                class="font-mono text-emerald-200">user:pass:cookies</span><br>
+                            กดแยก → ได้ทั้ง <span class="font-mono text-emerald-200">user:pass:cookies</span> และ <span
+                                class="font-mono text-emerald-200">user:pass</span> แยกตามเผ่า
+                        </p>
+                    </div>
+
+                    <div
+                        class="inline-flex items-center gap-2 px-3 py-1.5 rounded-full border border-emerald-300/70 bg-emerald-500/15 text-[11px] text-emerald-100 whitespace-nowrap">
+                        <span class="h-2 w-2 rounded-full bg-emerald-400 shadow-[0_0_10px_rgba(52,211,153,0.9)]"></span>
+                        รองรับช่องว่าง / แท็บ หลายตัว
+                    </div>
+                </div>
+
+                <!-- Input 1: รายชื่อ + สถานะ -->
+                <div class="mb-3">
+                    <div class="text-[11px] uppercase tracking-[0.18em] text-slate-400 mb-1">
+                        Input 1 · USER + STATUS (Angel / Demon / Not...)
+                    </div>
+                    <p class="text-xs text-slate-300 mb-2">
+                        รูปแบบข้อมูล:
+                        <code class="px-2 py-0.5 rounded-full bg-slate-900/90 border border-slate-500/70 text-[11px]">
+              ชื่อผู้ใช้[ช่องว่างหรือแท็บ]สถานะ
+            </code>
+                        เช่น
+                        <code
+                            class="px-2 py-0.5 rounded-full bg-slate-900/90 border border-slate-500/70 text-[11px]">AAA Angel</code>,
+                        <code
+                            class="px-2 py-0.5 rounded-full bg-slate-900/90 border border-slate-500/70 text-[11px]">BBB Demon</code>,
+                        <code
+                            class="px-2 py-0.5 rounded-full bg-slate-900/90 border border-slate-500/70 text-[11px]">CCC Not Found</code>
+                    </p>
+
+                    <textarea id="inputArea"
+                        class="w-full min-h-[180px] text-xs md:text-sm leading-relaxed font-mono bg-slate-900/80 border border-slate-600/80 focus:border-emerald-400 focus:ring-1 focus:ring-emerald-400/80 rounded-xl px-3 py-2 text-slate-100 placeholder:text-slate-500 outline-none"
+                        placeholder="ตัวอย่าง:
+AAA Angel
+BBB Demon
+CCC Not
+DDD Not Found
+EEE Angel"></textarea>
+                </div>
+
+                <!-- Input 2: user:pass:cookies -->
+                <div class="mb-4">
+                    <div class="text-[11px] uppercase tracking-[0.18em] text-slate-400 mb-1">
+                        Input 2 · USER:PASS:COOKIES (จะคัดเฉพาะที่มีเผ่า)
+                    </div>
+                    <p class="text-xs text-slate-300 mb-2">
+                        ใส่รายการในรูปแบบ:
+                        <code class="px-2 py-0.5 rounded-full bg-slate-900/90 border border-slate-500/70 text-[11px]">
+              user:pass:cookies
+            </code>
+                        เช่น
+                        <code
+                            class="px-2 py-0.5 rounded-full bg-slate-900/90 border border-slate-500/70 text-[11px]">AAA:1234:COOKIE_STRING_AAA</code><br>
+                        ถ้าเว้นช่องนี้ไว้ ระบบจะคืนเป็นแค่ชื่อ <span class="font-mono">user</span> เหมือนเดิม
+                    </p>
+
+                    <textarea id="upcInput"
+                        class="w-full min-h-[160px] text-xs md:text-sm leading-relaxed font-mono bg-slate-900/80 border border-slate-600/80 focus:border-emerald-400 focus:ring-1 focus:ring-emerald-400/80 rounded-xl px-3 py-2 text-slate-100 placeholder:text-slate-500 outline-none"
+                        placeholder="ตัวอย่าง:
+AAA:1111:AAA_COOKIE
+BBB:2222:BBB_COOKIE
+FFF:3333:FFF_COOKIE
+DDD:4444:DDD_COOKIE"></textarea>
+                </div>
+
+                <!-- Actions -->
+                <div class="flex flex-wrap items-center justify-between gap-3 mb-5">
+                    <div class="flex items-center gap-2">
+                        <button
+                            class="btn-primary inline-flex items-center gap-2 px-3.5 py-2 rounded-full text-xs md:text-sm font-medium border border-emerald-400/80 bg-gradient-to-r from-emerald-500/70 to-emerald-400/80 text-emerald-950 shadow-[0_0_18px_rgba(52,211,153,0.75)] hover:shadow-[0_0_24px_rgba(52,211,153,0.9)] hover:brightness-110 active:scale-[0.98] transition-all whitespace-nowrap"
+                            onclick="splitAngelDemon()">
+                            <span class="text-sm">✨</span>
+                            <span>แยก Angel / Demon / Not Found</span>
+                        </button>
+                    </div>
+
+                    <div class="flex items-center gap-3 flex-wrap">
+                        <button
+                            class="inline-flex items-center gap-2 px-3 py-1.5 rounded-full border border-slate-500/80 bg-slate-900/80 text-xs md:text-sm text-slate-200 hover:border-rose-400 hover:text-rose-200 hover:bg-rose-950/50 transition-all whitespace-nowrap"
+                            onclick="clearAll()">
+                            <span>🧹</span>
+                            <span>ล้างทั้งหมด</span>
+                        </button>
+                        <span class="text-[11px] text-slate-400">
+                            * สถานะอื่นนอกเหนือจาก Angel / Demon จะถูกจัดอยู่ในช่อง <span
+                                class="font-semibold text-slate-100">NOT FOUND</span>
+                        </span>
+                    </div>
+                </div>
+
+                <!-- Output grid -->
+                <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-4">
+
+                    <!-- DEMON -->
+                    <div
+                        class="bg-slate-900/80 border border-orange-500/70 rounded-xl p-3 flex flex-col gap-2 shadow-md shadow-orange-500/20">
+                        <div class="flex items-center justify-between gap-2">
+                            <div
+                                class="inline-flex items-center gap-2 text-xs font-semibold px-2.5 py-1 rounded-full bg-orange-500/15 text-orange-200 border border-orange-400/80">
+                                <span>🔥 DEMON</span>
+                            </div>
+                            <div class="flex items-center gap-2">
+                                <span id="demonCount"
+                                    class="px-2 py-1 rounded-full bg-slate-900/80 text-[11px] text-slate-200 border border-slate-600/80 whitespace-nowrap">
+                                    0 รายชื่อ
+                                </span>
+                            </div>
+                        </div>
+
+                        <!-- DEMON: user:pass:cookies -->
+                        <div class="flex items-center justify-between mt-1 mb-1">
+                            <span class="text-[11px] text-slate-400">user:pass:cookies</span>
+                            <button
+                                class="small-btn inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full bg-slate-800/80 border border-slate-500/80 text-[11px] text-slate-100 hover:border-emerald-400 hover:text-emerald-200 transition-all whitespace-nowrap min-w-max"
+                                onclick="copyText('demonOutput', this)">
+                                <span>📋</span>
+                                <span>คัดลอก</span>
+                            </button>
+                        </div>
+                        <textarea id="demonOutput"
+                            class="output-textarea w-full min-h-[120px] text-[11px] md:text-xs font-mono bg-slate-950/70 border border-slate-700/80 rounded-lg px-2.5 py-2 text-slate-100 resize-none mb-2"
+                            readonly></textarea>
+
+                        <!-- DEMON: user:pass -->
+                        <div class="flex items-center justify-between mt-1 mb-1">
+                            <span class="text-[11px] text-slate-400">user:pass (ตัด cookies)</span>
+                            <button
+                                class="small-btn inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full bg-slate-800/80 border border-slate-500/80 text-[11px] text-slate-100 hover:border-emerald-400 hover:text-emerald-200 transition-all whitespace-nowrap min-w-max"
+                                onclick="copyText('demonOutputUserPass', this)">
+                                <span>📋</span>
+                                <span>คัดลอก</span>
+                            </button>
+                        </div>
+                        <textarea id="demonOutputUserPass"
+                            class="output-textarea w-full min-h-[80px] text-[11px] md:text-xs font-mono bg-slate-950/70 border border-slate-700/80 rounded-lg px-2.5 py-2 text-slate-100 resize-none"
+                            readonly></textarea>
+                    </div>
+
+                    <!-- ANGEL -->
+                    <div
+                        class="bg-slate-900/80 border border-emerald-500/80 rounded-xl p-3 flex flex-col gap-2 shadow-md shadow-emerald-500/25">
+                        <div class="flex items-center justify-between gap-2">
+                            <div
+                                class="inline-flex items-center gap-2 text-xs font-semibold px-2.5 py-1 rounded-full bg-emerald-500/15 text-emerald-200 border border-emerald-400/80">
+                                <span>🕊 ANGEL</span>
+                            </div>
+                            <div class="flex items-center gap-2">
+                                <span id="angelCount"
+                                    class="px-2 py-1 rounded-full bg-slate-900/80 text-[11px] text-slate-200 border border-slate-600/80 whitespace-nowrap">
+                                    0 รายชื่อ
+                                </span>
+                            </div>
+                        </div>
+
+                        <!-- ANGEL: user:pass:cookies -->
+                        <div class="flex items-center justify-between mt-1 mb-1">
+                            <span class="text-[11px] text-slate-400">user:pass:cookies</span>
+                            <button
+                                class="small-btn inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full bg-slate-800/80 border border-slate-500/80 text-[11px] text-slate-100 hover:border-emerald-400 hover:text-emerald-200 transition-all whitespace-nowrap min-w-max"
+                                onclick="copyText('angelOutput', this)">
+                                <span>📋</span>
+                                <span>คัดลอก</span>
+                            </button>
+                        </div>
+                        <textarea id="angelOutput"
+                            class="output-textarea w-full min-h-[120px] text-[11px] md:text-xs font-mono bg-slate-950/70 border border-slate-700/80 rounded-lg px-2.5 py-2 text-slate-100 resize-none mb-2"
+                            readonly></textarea>
+
+                        <!-- ANGEL: user:pass -->
+                        <div class="flex items-center justify-between mt-1 mb-1">
+                            <span class="text-[11px] text-slate-400">user:pass (ตัด cookies)</span>
+                            <button
+                                class="small-btn inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full bg-slate-800/80 border border-slate-500/80 text-[11px] text-slate-100 hover:border-emerald-400 hover:text-emerald-200 transition-all whitespace-nowrap min-w-max"
+                                onclick="copyText('angelOutputUserPass', this)">
+                                <span>📋</span>
+                                <span>คัดลอก</span>
+                            </button>
+                        </div>
+                        <textarea id="angelOutputUserPass"
+                            class="output-textarea w-full min-h-[80px] text-[11px] md:text-xs font-mono bg-slate-950/70 border border-slate-700/80 rounded-lg px-2.5 py-2 text-slate-100 resize-none"
+                            readonly></textarea>
+                    </div>
+
+                    <!-- NOT FOUND -->
+                    <div
+                        class="bg-slate-900/80 border border-slate-600/80 rounded-xl p-3 flex flex-col gap-2 shadow-md shadow-slate-700/35 lg:col-span-1 md:col-span-2 lg:col-span-1">
+                        <div class="flex items-center justify-between gap-2">
+                            <div
+                                class="inline-flex items-center gap-2 text-xs font-semibold px-2.5 py-1 rounded-full bg-slate-800/90 text-slate-200 border border-slate-500/80">
+                                <span>🕳 NOT FOUND</span>
+                            </div>
+                            <div class="flex items-center gap-2">
+                                <span id="notFoundCount"
+                                    class="px-2 py-1 rounded-full bg-slate-900/80 text-[11px] text-slate-200 border border-slate-600/80 whitespace-nowrap">
+                                    0 รายชื่อ
+                                </span>
+                            </div>
+                        </div>
+
+                        <!-- NOT FOUND: user:pass:cookies -->
+                        <div class="flex items-center justify-between mt-1 mb-1">
+                            <span class="text-[11px] text-slate-400">user:pass:cookies</span>
+                            <button
+                                class="small-btn inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full bg-slate-800/80 border border-slate-500/80 text-[11px] text-slate-100 hover:border-emerald-400 hover:text-emerald-200 transition-all whitespace-nowrap min-w-max"
+                                onclick="copyText('notFoundOutput', this)">
+                                <span>📋</span>
+                                <span>คัดลอก</span>
+                            </button>
+                        </div>
+                        <textarea id="notFoundOutput"
+                            class="output-textarea w-full min-h-[120px] text-[11px] md:text-xs font-mono bg-slate-950/70 border border-slate-700/80 rounded-lg px-2.5 py-2 text-slate-100 resize-none mb-2"
+                            readonly></textarea>
+
+                        <!-- NOT FOUND: user:pass -->
+                        <div class="flex items-center justify-between mt-1 mb-1">
+                            <span class="text-[11px] text-slate-400">user:pass (ตัด cookies)</span>
+                            <button
+                                class="small-btn inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full bg-slate-800/80 border border-slate-500/80 text-[11px] text-slate-100 hover:border-emerald-400 hover:text-emerald-200 transition-all whitespace-nowrap min-w-max"
+                                onclick="copyText('notFoundOutputUserPass', this)">
+                                <span>📋</span>
+                                <span>คัดลอก</span>
+                            </button>
+                        </div>
+                        <textarea id="notFoundOutputUserPass"
+                            class="output-textarea w-full min-h-[80px] text-[11px] md:text-xs font-mono bg-slate-950/70 border border-slate-700/80 rounded-lg px-2.5 py-2 text-slate-100 resize-none"
+                            readonly></textarea>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+
+        <!-- Footer / Credit -->
+        <div class="mt-4 flex flex-wrap items-center justify-between gap-2 text-[11px] text-slate-400">
+            <span>The Forge Tools · Angel/Demon Map Helper</span>
+            <a href="https://pttxd.rexzy.xyz/"> <span>Made by <span class="text-emerald-400 font-semibold">PTTXD
+                        SHOP</span></span></a>
+        </div>
+
+    </div>
+    <script>
+
+
+    </script>
+</body>
+
+</html>

@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+  <meta charset="UTF-8" />
+  <title>Support Tools | PTTXD SHOP</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+  <!-- Tailwind CSS CDN -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            forgeBg: '#020617',
+            forgeCard: '#020817',
+            forgeAccent: '#22c55e',
+          }
+        }
+      }
+    }
+  </script>
+</head>
+<body class="min-h-screen bg-gradient-to-br from-black via-slate-950 to-emerald-950 text-slate-100 flex justify-center px-3 py-6">
+
+  <div class="w-full max-w-3xl bg-slate-950/80 border border-emerald-500/40 rounded-3xl shadow-2xl backdrop-blur-md px-5 py-6 md:px-8 md:py-8">
+
+    <!-- Top bar -->
+    <div class="flex flex-wrap items-center justify-between gap-3 mb-6">
+      <div class="flex items-center gap-3">
+        <div class="h-10 w-10 rounded-2xl bg-gradient-to-br from-emerald-400 to-emerald-600 flex items-center justify-center shadow-[0_0_24px_rgba(16,185,129,0.9)]">
+          <span class="text-xl font-extrabold text-emerald-950">S</span>
+        </div>
+        <div class="flex flex-col">
+          <span class="text-base md:text-lg font-semibold tracking-wide">Support Tools</span>
+          <span class="text-[11px] uppercase tracking-[0.18em] text-slate-400">
+            PTTXD SHOP · Internal Toolkit
+          </span>
+        </div>
+      </div>
+
+      <div class="inline-flex items-center gap-2 px-3 py-1.5 rounded-full border border-emerald-400/80 bg-emerald-500/15 text-[11px] text-emerald-100 uppercase tracking-[0.2em]">
+        <span class="h-2 w-2 rounded-full bg-emerald-400 shadow-[0_0_10px_rgba(52,211,153,0.9)]"></span>
+        <span>Online</span>
+      </div>
+    </div>
+
+    <!-- Description -->
+    <div class="mb-5">
+      <p class="text-sm text-slate-300">
+        ศูนย์รวมเครื่องมือเล็ก ๆ สำหรับงานซัพพอร์ต / จัดการข้อมูล
+        เลือกเครื่องมือที่ต้องการด้านล่างได้เลย
+      </p>
+    </div>
+
+    <!-- Tool list -->
+    <div class="space-y-4">
+
+      <!-- Forge Angel/Demon card -->
+      <div class="relative overflow-hidden rounded-2xl border border-emerald-500/50 bg-gradient-to-br from-slate-950/90 via-slate-950/95 to-emerald-950/40 shadow-lg">
+        <!-- แถบบนเล็ก ๆ -->
+        <div class="flex items-center justify-between px-4 py-2 border-b border-emerald-500/30 bg-slate-950/80">
+          <div class="inline-flex items-center gap-2 text-[11px] uppercase tracking-[0.2em] text-emerald-200">
+            <span class="h-1.5 w-1.5 rounded-full bg-emerald-400 shadow-[0_0_8px_rgba(52,211,153,0.9)]"></span>
+            <span>The Forge Tool</span>
+          </div>
+          <span class="text-[10px] px-2 py-0.5 rounded-full bg-emerald-500/15 border border-emerald-400/60 text-emerald-100 uppercase tracking-[0.16em]">
+            Angel / Demon
+          </span>
+        </div>
+
+        <div class="p-4 md:p-5 flex flex-col gap-3 md:flex-row md:items-center md:justify-between">
+          <div class="space-y-1 md:space-y-2">
+            <div class="flex items-center gap-2">
+              <h2 class="text-base md:text-lg font-semibold flex items-center gap-2">
+                The Forge – Angel / Demon Classifier
+              </h2>
+            </div>
+            <p class="text-xs md:text-sm text-slate-300">
+              แยกเผ่า <span class="font-semibold text-emerald-300">Angel</span>,
+              <span class="font-semibold text-orange-300">Demon</span>,
+              <span class="font-semibold text-slate-100">Not Found</span>
+              จากรายชื่อ + ดึงเฉพาะชุด <span class="font-mono text-emerald-200">user:pass:cookies</span>
+              พร้อมแปลงเป็น <span class="font-mono text-emerald-200">user:pass</span> ให้ในตัว
+            </p>
+            <div class="flex flex-wrap gap-2 text-[11px] text-slate-400">
+              <span class="px-2 py-0.5 rounded-full border border-emerald-500/40 bg-emerald-500/10">
+                • Mapping เผ่า
+              </span>
+              <span class="px-2 py-0.5 rounded-full border border-slate-500/50 bg-slate-900/60">
+                • Filter user:pass:cookies
+              </span>
+              <span class="px-2 py-0.5 rounded-full border border-slate-500/40 bg-slate-900/60">
+                • Output แยกตามเผ่า
+              </span>
+            </div>
+          </div>
+
+          <div class="mt-2 md:mt-0 flex md:flex-col items-end md:items-center gap-2">
+           <button
+  class="inline-flex items-center gap-2 px-4 py-2 rounded-full text-xs md:text-sm font-medium border border-emerald-400/90 bg-gradient-to-r from-emerald-500 to-emerald-400 text-emerald-950 shadow-[0_0_18px_rgba(52,211,153,0.8)] hover:shadow-[0_0_26px_rgba(52,211,153,1)] hover:brightness-110 active:scale-[0.97] transition-all whitespace-nowrap"
+ onclick="window.location.href='forge_angel_demon.html'"
+>
+  <span>✨ เปิดเครื่องมือ</span>
+</button>
+
+            <span class="text-[10px] text-slate-400 hidden md:inline">
+             
+            </span>
+          </div>
+        </div>
+      </div>
+
+    </div>
+
+    <!-- Footer -->
+    <div class="mt-5 pt-3 border-t border-slate-700/70 flex flex-wrap items-center justify-between gap-2 text-[11px] text-slate-400">
+      <span>Support Tools Panel</span>
+   <a href="https://pttxd.rexzy.xyz/">  <span>Made by <span class="text-emerald-400 font-semibold">PTTXD SHOP</span></span></a> 
+    </div>
+
+  </div>
+
+  <!-- main.js ถ้าอยากใช้ต่อกับ API อื่น ๆ ภายหลัง -->
+  <!-- <script src="js/main.js"></script> -->
+
+</body>
+</html>
