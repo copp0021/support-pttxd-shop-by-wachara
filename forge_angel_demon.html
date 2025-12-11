@@ -314,7 +314,188 @@ DDD:4444:DDD_COOKIE"></textarea>
 
     </div>
     <script>
+    function splitAngelDemon() {
+      const mappingText = document.getElementById('inputArea').value;
+      const upcText = document.getElementById('upcInput').value;
 
+      const mappingLines = mappingText.split('\n');
+
+      const demonsNames = [];
+      const angelsNames = [];
+      const notFoundsNames = [];
+
+      const groupMap = new Map(); // name -> group
+
+      // 1) อ่านตารางเผ่า
+      mappingLines.forEach(line => {
+        const trimmed = line.trim();
+        if (!trimmed) return;
+
+        const parts = trimmed.split(/\s+/);
+        if (parts.length < 2) return;
+
+        const name = parts[0];
+        const status = parts.slice(1).join(' ').trim();
+        const statusLower = status.toLowerCase();
+
+        let group;
+        if (statusLower === 'demon') {
+          demonsNames.push(name);
+          group = 'demon';
+        } else if (statusLower === 'angel') {
+          angelsNames.push(name);
+          group = 'angel';
+        } else if (statusLower.startsWith('not')) {
+          notFoundsNames.push(name);
+          group = 'notFound';
+        } else {
+          notFoundsNames.push(name);
+          group = 'notFound';
+        }
+        groupMap.set(name, group);
+      });
+
+      // helper แปลงเป็น user:pass
+      function toUserPass(list) {
+        return list.map(line => {
+          const parts = line.split(':');
+          if (parts.length >= 2) {
+            return parts[0] + ':' + parts[1];
+          }
+          return parts[0] || '';
+        }).filter(Boolean);
+      }
+
+      if (upcText.trim()) {
+        // 2) มี user:pass:cookies → ใช้แยกตามเผ่า
+        const upcLines = upcText.split('\n');
+
+        const demonsUPC = [];
+        const angelsUPC = [];
+        const notFoundsUPC = [];
+
+        upcLines.forEach(line => {
+          const trimmed = line.trim();
+          if (!trimmed) return;
+
+          const user = trimmed.split(':')[0].trim();
+          if (!user) return;
+
+          const group = groupMap.get(user);
+          if (!group) return;
+
+          if (group === 'demon') {
+            demonsUPC.push(trimmed);
+          } else if (group === 'angel') {
+            angelsUPC.push(trimmed);
+          } else if (group === 'notFound') {
+            notFoundsUPC.push(trimmed);
+          }
+        });
+
+        const demonsUP = toUserPass(demonsUPC);
+        const angelsUP = toUserPass(angelsUPC);
+        const notFoundsUP = toUserPass(notFoundsUPC);
+
+        // user:pass:cookies แยกตามเผ่า
+        document.getElementById('demonOutput').value = demonsUPC.join('\n');
+        document.getElementById('angelOutput').value = angelsUPC.join('\n');
+        document.getElementById('notFoundOutput').value = notFoundsUPC.join('\n');
+
+        // user:pass (ตัด cookies) แยกตามเผ่า
+        document.getElementById('demonOutputUserPass').value = demonsUP.join('\n');
+        document.getElementById('angelOutputUserPass').value = angelsUP.join('\n');
+        document.getElementById('notFoundOutputUserPass').value = notFoundsUP.join('\n');
+
+        document.getElementById('demonCount').textContent = demonsUPC.length + ' รายชื่อ';
+        document.getElementById('angelCount').textContent = angelsUPC.length + ' รายชื่อ';
+        document.getElementById('notFoundCount').textContent = notFoundsUPC.length + ' รายชื่อ';
+      } else {
+        // 3) ไม่ใส่ user:pass:cookies → ใช้แค่ user name เหมือนเดิม
+        document.getElementById('demonOutput').value = demonsNames.join('\n');
+        document.getElementById('angelOutput').value = angelsNames.join('\n');
+        document.getElementById('notFoundOutput').value = notFoundsNames.join('\n');
+
+        // ช่อง user:pass ว่าง (เพราะไม่มี cookies มาให้ตัด)
+        document.getElementById('demonOutputUserPass').value = '';
+        document.getElementById('angelOutputUserPass').value = '';
+        document.getElementById('notFoundOutputUserPass').value = '';
+
+        document.getElementById('demonCount').textContent = demonsNames.length + ' รายชื่อ';
+        document.getElementById('angelCount').textContent = angelsNames.length + ' รายชื่อ';
+        document.getElementById('notFoundCount').textContent = notFoundsNames.length + ' รายชื่อ';
+      }
+    }
+
+    function clearAll() {
+      document.getElementById('inputArea').value = '';
+      document.getElementById('upcInput').value = '';
+
+      document.getElementById('demonOutput').value = '';
+      document.getElementById('angelOutput').value = '';
+      document.getElementById('notFoundOutput').value = '';
+
+      document.getElementById('demonOutputUserPass').value = '';
+      document.getElementById('angelOutputUserPass').value = '';
+      document.getElementById('notFoundOutputUserPass').value = '';
+
+      document.getElementById('demonCount').textContent = '0 รายชื่อ';
+      document.getElementById('angelCount').textContent = '0 รายชื่อ';
+      document.getElementById('notFoundCount').textContent = '0 รายชื่อ';
+    }
+
+    function copyText(textareaId, btn) {
+      const textarea = document.getElementById(textareaId);
+      const text = textarea.value;
+
+      if (!text) {
+        animateButton(btn, 'ไม่มีข้อมูล', true);
+        return;
+      }
+
+      if (navigator.clipboard && navigator.clipboard.writeText) {
+        navigator.clipboard.writeText(text)
+          .then(() => {
+            animateButton(btn, 'คัดลอกแล้ว', false);
+          })
+          .catch(() => {
+            fallbackCopy(textarea, btn);
+          });
+      } else {
+        fallbackCopy(textarea, btn);
+      }
+    }
+
+    function fallbackCopy(textarea, btn) {
+      textarea.select();
+      document.execCommand('copy');
+      animateButton(btn, 'คัดลอกแล้ว', false);
+      window.getSelection().removeAllRanges();
+    }
+
+    function animateButton(btn, label, isWarn) {
+      const original = btn.innerHTML;
+      btn.innerHTML = (isWarn ? '⚠️ ' : '✅ ') + label.replace(/^(⚠️|✅)\s?/, '');
+      btn.style.opacity = '0.9';
+
+      btn.classList.remove('border-rose-400', 'text-rose-200', 'border-emerald-400', 'text-emerald-200');
+
+      if (isWarn) {
+        btn.classList.add('border-rose-400', 'text-rose-200');
+      } else {
+        btn.classList.add('border-emerald-400', 'text-emerald-200');
+      }
+
+      setTimeout(() => {
+        btn.innerHTML = original;
+        btn.style.opacity = '1';
+        btn.classList.remove('border-rose-400', 'text-rose-200', 'border-emerald-400', 'text-emerald-200');
+      }, 1100);
+    }
+
+    function goTo(path) {
+      window.location.href = path;
+    }
 
     </script>
 </body>
